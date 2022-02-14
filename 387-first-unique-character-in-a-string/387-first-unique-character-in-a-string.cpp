@@ -1,19 +1,16 @@
 class Solution {
 public:
     int firstUniqChar(string s) {
-        int a[256]={0};
-        for(int i=0;i<s.length();i++)
+        map<char,int>m;
+        for(char c:s)
         {
-            a[s[i]]++;
+            m[c]++;
         }
-        for(int i=0;i<s.length();i++)
+        for(char c:s)
         {
-            if(a[s[i]]==1)
-            {
-                return i;
-            }
+            if(m[c]==1)
+                return s.find(c);
         }
         return -1;
-        
     }
 };
