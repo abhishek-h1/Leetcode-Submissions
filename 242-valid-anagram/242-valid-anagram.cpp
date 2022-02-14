@@ -1,23 +1,19 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        int sl=s.length(), tl=t.length();
-        
-        if(sl!=tl)
+        if(s.length()!=t.length())
             return false;
-        
         int a[256]={0};
-        for(int i=0;i<sl;i++)
+        for(int i=0;i<s.length();i++)
         {
             a[s[i]]++;
             a[t[i]]--;
         }
-        for(int i=0;i<sl;i++)
+        
+        for(int i=0;i<s.length();i++)
         {
             if(a[s[i]]!=0)
-            {
                 return false;
-            }
         }
         return true;
         
