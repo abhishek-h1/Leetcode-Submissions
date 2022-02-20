@@ -20,31 +20,11 @@ public:
         }
         TreeNode*temp=root;
         
-        while(temp!=NULL)
-        {
-            if(val>temp->val)
-            {
-                if(temp->right==NULL)
-                {
-                   temp->right=new TreeNode(val);
-                    return root;
-                }
-                else{
-                    temp=temp->right;
-                }
-            }
-            else if(val<temp->val)
-            {
-                if(temp->left==NULL)
-                {
-                    temp->left= new TreeNode(val);
-                    return root;
-                }
-                else
-                    temp=temp->left;
-            }
-                
-        }
+        if(root->val<val)
+            root->right=insertIntoBST(root->right,val);
+        else
+            root->left=insertIntoBST(root->left,val);
+        
         return root;
     }
 };
