@@ -5,7 +5,7 @@ public:
         
         for(int i=1;i<=n;i++)
         {
-            v[i]=(v[i&(i-1)]+1);
+            v[i]=v[i&(i-1)]+1;
         }
         return v;
     }
