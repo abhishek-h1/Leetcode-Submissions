@@ -1,12 +1,12 @@
 class Solution {
 public:
-    int area=0;
+    // int area=0;
     
     void dfs(vector<vector<int>>& grid,int i, int j)
     {
         if(i<0||j<0||i>=grid.size()||j>=grid[0].size()||grid[i][j]!=1)
             return;
-        area++;
+        // area++;
         grid[i][j]=2;
         dfs(grid,i-1,j);
         dfs(grid,i+1,j);
@@ -19,6 +19,9 @@ public:
         int r=grid.size();
         int c=grid[0].size();
         
+        ios_base::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
         for(int i=0;i<c;i++)
         {
             if(grid[0][i]==1)
@@ -42,9 +45,7 @@ public:
             {
                 if(grid[i][j]==1)
                 {
-                    area=0;
-                    dfs(grid,i,j);
-                    ans+=area;
+                    ans++;
                 }
             }
         }
