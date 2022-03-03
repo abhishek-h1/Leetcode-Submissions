@@ -62,7 +62,11 @@ public:
         
         return up && down && left && right;
     }
-    int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {        
+    int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {  
+        
+        ios_base::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
         if(grid2.size()==0 || grid2[0].size()==0)
             return 0;
         
