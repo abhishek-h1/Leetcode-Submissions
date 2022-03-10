@@ -67,14 +67,14 @@ public:
                 {
                     if(grid[nx][ny]==1)
                     {
-                        cout<<nx<<" "<<ny;
+                        // cout<<nx<<" "<<ny;
                         return grid[cx][cy]-2;
                         
                     }
                         
                     if(grid[nx][ny]==0)
                     {
-                        cout<<grid[cx][cy]<<" ";
+                        // cout<<grid[cx][cy]<<" ";
                         grid[nx][ny]=grid[cx][cy]+1;
                         q.push({nx,ny});
                     }
