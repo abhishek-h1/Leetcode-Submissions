@@ -12,7 +12,7 @@ class Solution {
 public:
     ListNode* swapNodes(ListNode* head, int k) {
         
-        auto left = head,right=head,curr=head;
+        ListNode* left = head,*right=head,*curr=head;
         int c=1;
         while(curr!=NULL)
         {
