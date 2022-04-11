@@ -6,7 +6,7 @@ public:
         {
             for(int j=0;j+i<=arr.size();j++)
             {
-                sum+=accumulate(arr.begin()+j,arr.begin()+j+i,0);
+                sum=accumulate(arr.begin()+j,arr.begin()+j+i,sum);
             }
         }
         return sum;
