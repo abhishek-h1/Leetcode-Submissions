@@ -15,20 +15,15 @@ public:
             return head;
         if(head->next==NULL)
             return NULL;
-        ListNode* temp=head;
-        int n=0;
-        while(temp!=NULL)
+        auto slow=head, fast=head;
+        auto prevMid=slow;
+        while(fast and fast->next)
         {
-            n++;
-            temp=temp->next;
+            fast=fast->next->next;
+            prevMid=slow;
+            slow=slow->next;
         }
-        int m=n/2;
-        temp=head;
-        for(int i=0;i<m-1;i++)
-        {
-            temp=temp->next;
-        }
-        temp->next=temp->next->next;
+        prevMid->next=slow->next;
         return head;
     }
 };
