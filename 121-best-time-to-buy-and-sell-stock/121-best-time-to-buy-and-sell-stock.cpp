@@ -1,14 +1,16 @@
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        vector<int>dp(prices.size(),0);
-        int maxe=INT_MIN;
+        int ans=INT_MIN;
+        int r=prices[prices.size()-1];
+        
         for(int i=prices.size()-1;i>=0;i--)
         {
-            maxe=max(prices[i],maxe);
-            dp[i]=maxe-prices[i];
+            r=max(r,prices[i]);
+            ans=max(ans,r-prices[i]);
+            // cout<<r<<" "<<ans<<endl;
         }
-        return *max_element(dp.begin(),dp.end());
-        
+        return ans;
+            
     }
 };
