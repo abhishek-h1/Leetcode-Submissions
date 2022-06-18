@@ -5,7 +5,7 @@ public:
         int max=INT_MIN;
         while(l<r)
         {
-            int area=min(height[l],height[r])*abs(l-r);
+            int area=min(height[l],height[r])*(r-l);
             max = (area>max)?area:max;
             if(height[l]<height[r])
                 l++;
