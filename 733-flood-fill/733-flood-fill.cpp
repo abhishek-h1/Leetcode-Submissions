@@ -1,24 +1,41 @@
 class Solution {
 public:
-    void dfs(vector<vector<int>>&image,int r,int c, int n, int col)
+    int cx[4]={0,0,-1,1};
+    int cy[4]={1,-1,0,0};
+    bool isValid(vector<vector<int>>& image,int r,int c)
     {
-        if(image[r][c] == col)
-        {
-            image[r][c]=n;
-            if(r>=1)
-                dfs(image,r-1,c,n,col);
-            if(c>=1)
-                dfs(image,r,c-1,n,col);
-            if(r<image.size()-1)
-                dfs(image,r+1,c,n,col);
-            if(c<image[0].size()-1)
-                dfs(image,r,c+1,n,col);
-        }
-            
+        int m=image.size();
+        int n=image[0].size();
+        
+        if(r<0 || c<0 || r>=m || c>=n)
+            return false;
+        return true;
     }
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
-        if(newColor != image[sr][sc])
-            dfs(image,sr,sc,newColor,image[sr][sc]);
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        queue<pair<int,int>>q;
+        q.push({sr,sc});
+        int c=image[sr][sc];
+        if(c==color)
+            return image;
+        while(!q.empty())
+        {
+            int x=q.front().first;
+            int y=q.front().second;
+            q.pop();
+            image[x][y]=color;
+            for(int i=0;i<4;i++)
+            {
+                int nx=x+cx[i];
+                int ny=y+cy[i];
+                
+                if(isValid(image,nx,ny) && image[nx][ny]==c)
+                {
+                    q.push({nx,ny});
+                    // vis[nx][ny]=true;
+                    image[nx][ny]=color;
+                }
+            }
+        }
         return image;
     }
 };
