@@ -1,55 +1,40 @@
 class Solution {
 public:
-    // int area=0;
     
-    void dfs(vector<vector<int>>& grid,int i, int j)
+    int dfs(vector<vector<int>> &grid, int r, int c)
     {
-        if(i<0||j<0||i>=grid.size()||j>=grid[0].size()||grid[i][j]!=1)
-            return;
-        // area++;
-        grid[i][j]=2;
-        dfs(grid,i-1,j);
-        dfs(grid,i+1,j);
-        dfs(grid,i,j-1);
-        dfs(grid,i,j+1);
+        int m=grid.size();
+        int n=grid[0].size();
+        
+        if(r<0 or c<0 or r>=m or c>=n or  grid[r][c]!=1)
+            return 0;
+        
+        grid[r][c]=2;
+        return (1+ dfs(grid,r-1,c)+ dfs(grid,r+1,c)+ dfs(grid,r,c-1)+  dfs(grid,r,c+1));
     }
     
-    
     int numEnclaves(vector<vector<int>>& grid) {
-        int r=grid.size();
-        int c=grid[0].size();
-        
-        ios_base::sync_with_stdio(0);
-        cin.tie(0);
-        cout.tie(0);
-        for(int i=0;i<c;i++)
+        for(int i=0;i<grid.size();i++)
         {
-            if(grid[0][i]==1)
-                dfs(grid,0,i);
-            if(grid[r-1][i]==1)
-                dfs(grid,r-1,i);
+            for(int j=0;j<grid[i].size();j++)
+            {
+                if((i*j==0 or i==grid.size()-1 or j==grid[i].size()-1) and grid[i][j]==1)
+                    int temp=dfs(grid,i,j);
+            }
         }
         
-        for(int i=0;i<r;i++)
-        {
-            if(grid[i][0]==1)
-                dfs(grid,i,0);
-            if(grid[i][c-1]==1)
-                dfs(grid,i,c-1);
-        }
         int ans=0;
         
-        for(int i=0;i<r;i++)
+        for(int i=0;i<grid.size();i++)
         {
-            for(int j=0;j<c;j++)
+            for(int j=0;j<grid[i].size();j++)
             {
                 if(grid[i][j]==1)
                 {
-                    ans++;
+                    ans+=dfs(grid,i,j);
                 }
             }
         }
         return ans;
-        
     }
 };
