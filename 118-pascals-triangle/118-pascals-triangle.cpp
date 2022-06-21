@@ -1,32 +1,18 @@
 class Solution {
 public:
-    vector<vector<int>> generate(int Rows) {
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>>ans(numRows);
         
-        vector<vector<int>> res;
-        vector<int>temp;
-        
-        for(int i=1;i<=Rows;i++)
+        for(int i=0;i<numRows;i++)
         {
-            int v=1;
-            for(int j=1;j<=i;j++)
+            ans[i].resize(i+1);
+            ans[i][0]=ans[i][i]=1;
+            
+            for(int j=1;j<i;j++)
             {
-                temp.push_back(v);
-                v=v*((i-j))/j;
+                ans[i][j]=ans[i-1][j-1]+ans[i-1][j];
             }
-            res.push_back(temp);
-            temp.clear();
         }
-        return res;
-        
+        return ans;
     }
 };
-
-
-/*
-nCr = n!/((n-r)!*r!)
-iCj = i!/((i-j)!*j!)
-
-iC(j-1) = i!/((i-j+1)!*(j-1)!)
-
-iCj = 
-*/
