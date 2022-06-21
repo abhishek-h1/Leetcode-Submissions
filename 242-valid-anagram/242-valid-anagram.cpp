@@ -3,16 +3,14 @@ public:
     bool isAnagram(string s, string t) {
         if(s.length()!=t.length())
             return false;
-        int a[256]={0};
-        for(int i=0;i<s.length();i++)
+        map<char,int>m;
+        for(char c:s)
         {
-            a[s[i]]++;
-            a[t[i]]--;
+            m[c]++;
         }
-        
-        for(int i=0;i<s.length();i++)
+        for(char c:t)
         {
-            if(a[s[i]]!=0)
+            if(m[c]--<1)
                 return false;
         }
         return true;
