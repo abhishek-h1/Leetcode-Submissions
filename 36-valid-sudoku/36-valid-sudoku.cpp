@@ -1,66 +1,29 @@
 class Solution {
 public:
     bool isValidSudoku(vector<vector<char>>& board) {
-        set<char> m;
-        
-        int flag=true;
+        map<char,int> r,c,box[9];
         
         for(int i=0;i<9;i++)
         {
             for(int j=0;j<9;j++)
             {
-                if(m.find(board[i][j])!=m.end())
-                {
-                    cout<<"HERE  i"<<i<<"  j "<<j;
-                    return false;
-                }
-                if(board[i][j]!='.')
-                    m.insert(board[i][j]);
+                char c1 =board[i][j];
                 
-            }
-            m.clear();
-        }
-        
-        
-       for(int i=0;i<9;i++)
-        {
-            for(int j=0;j<9;j++)
-            {
-                if(m.find(board[j][i])!=m.end())
+                char c2=board[j][i];
+                if(c1!='.')
                 {
-                    cout<<"Here  i"<<i<<"  j "<<j;
-
-                    return false;
+                    if(r[c1]++>0 or box[((i/3)*3) +(j/3)][c1]++>0)
+                        return false;
                 }
-                if(board[j][i]!='.')
-                    m.insert(board[j][i]);
-                
-            }
-            m.clear();
-        }
-        
-        
-        
-        for(int i=0;i<7;i+=3)
-        {
-            for(int j=0;j<7;j+=3)
-            {
-                for(int k=0;k<3;k++)
+                if(c2!='.')
                 {
-                    for(int l=0;l<3;l++)
-                    {
-                        if(m.find(board[i+k][j+l])!=m.end())
-                        {
-                            return false;
-                        }
-                        if(board[i+k][j+l]!='.')
-                            m.insert(board[i+k][j+l]);  
-                    }
+                    if(c[c2]++>0)
+                        return false;
                 }
-                m.clear();
             }
+            r.clear();
+            c.clear();
         }
-        
         return true;
     }
 };
