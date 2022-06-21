@@ -16,7 +16,7 @@ public:
         {
             s=s->next;
             f= f and f->next? f->next->next:NULL;
-            if(!f&&!s)
+            if(!f)
                 return NULL;
         }while(f!=s);
         
