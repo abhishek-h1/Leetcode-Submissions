@@ -1,25 +1,17 @@
 class Solution {
 public:
-    bool canConstruct(string ransomNote, string magazine) {
-        int n1=ransomNote.length(), n2=magazine.length();
-        if(n1>n2)
+    bool canConstruct(string r, string m) {
+        if(m.length()<r.length())
             return false;
-        
-        int a[256]={0};
-        int j=0;
-        for(int i=0;i<n2;i++)
+        map<char,int>mp;
+        int i=0;
+        for(char c:m)
         {
-            a[magazine[i]]++;
-            if(j<n1)
-            {
-                a[ransomNote[j]]--;
-                j++;
-            }
-            
+            mp[c]++;   
         }
-        for(int i=0;i<256;i++)
+        for(char c:r)
         {
-            if(a[i]<0)
+            if(mp[c]--<1)
                 return false;
         }
         return true;
