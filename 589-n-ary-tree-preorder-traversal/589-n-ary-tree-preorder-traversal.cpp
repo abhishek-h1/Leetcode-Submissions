@@ -19,22 +19,23 @@ public:
 */
 
 class Solution {
-    private:
-            vector<int> ans;
-
 public:
     vector<int> preorder(Node* root) {
         if(!root)
             return {};
-        ans.push_back(root->val);
-        
-        for(int i=0;i<root->children.size();i++)
+        vector<int>ans;
+        stack<Node*> s;
+        s.push(root);
+        while(!s.empty())
         {
-            preorder(root->children[i]);
+            Node* temp=s.top();
+            s.pop();
+            ans.push_back(temp->val);
+            for(int i=temp->children.size()-1;i>=0;i--)
+            {
+                s.push(temp->children[i]);
+            }
         }
         return ans;
-        
-        
-        
     }
 };
