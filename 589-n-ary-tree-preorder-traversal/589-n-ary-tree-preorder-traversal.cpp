@@ -19,20 +19,22 @@ public:
 */
 
 class Solution {
+    private:
+            vector<int> ans;
+
 public:
-    vector<int>res;
-    void pre(Node* root)
-    {
-        if(!root)
-            return;
-        res.push_back(root->val);
-        for(auto child:root->children)
-        {
-            pre(child);
-        }
-    }
     vector<int> preorder(Node* root) {
-        pre(root);
-        return res;
+        if(!root)
+            return {};
+        ans.push_back(root->val);
+        
+        for(int i=0;i<root->children.size();i++)
+        {
+            preorder(root->children[i]);
+        }
+        return ans;
+        
+        
+        
     }
 };
