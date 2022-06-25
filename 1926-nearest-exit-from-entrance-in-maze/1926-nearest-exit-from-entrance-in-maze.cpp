@@ -1,66 +1,51 @@
 class Solution {
+    private:
+    int x[4]={1,-1,0,0};
+    int y[4]={0,0,-1,1};
 public:
-    bool safe(int i,int j, int r, int c)
-    {
-        if(i>=0 and j>=0 and i<r and j<c)
-            return true;
-        return false;
-    }
-    
-    bool exit(int i, int j, int r, int c)
-    {
-        if(i==0 or j==0 or i==r-1 or j==c-1)
-            return true; 
-        return false;
-    }
-    
-    vector<int> x = {0, 0, -1, 1};
-    vector<int> y = {1, -1, 0, 0};
-    
-    
     int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
-        queue<pair<int,int>> q;
-        int r=maze.size();
-        int c=maze[0].size();
-        if(r==1 and c==1)
-            return -1;
+        int m=maze.size();
+        int n=maze[0].size();
         
-        char w='+', route='.';
+        queue<pair<int,int>>q;
         
-        q.push({entrance[0], entrance[1]});
+        q.push({entrance[0],entrance[1]});
         
-        vector<vector<int>>dist(r, vector<int>(c,0));
-        maze[entrance[0]][entrance[1]]=w;
-        
+        int ans=0;
         while(!q.empty())
         {
-            int cx = q.front().first;
-            int cy = q.front().second;
-            
-            q.pop();
-            
-            // cout<<exit(cx,cy,r,c)<<" "<<cx<<" "<<cy<<endl;
-            
-            if(exit(cx,cy,r,c) and (cx!=entrance[0] or cy!=entrance[1]))
-                return dist[cx][cy];
-            
-            for(int i=0;i<4;i++)
+            int sz=q.size();
+            while(sz--)
             {
-                int nx = cx+x[i];
-                int ny = cy+y[i];
-                // cout<<"in boy"<<endl;
+                int cx=q.front().first;
+                int cy=q.front().second;
                 
-                if(safe(nx,ny, r, c) and maze[nx][ny]=='.')
+                q.pop();
+                
+                if((cx==m-1 or cy==n-1 or cx==0 or cy==0) and (cx!=entrance[0] or cy!=entrance[1])) 
+                        return ans;
+                
+                for(int i=0;i<4;i++)
                 {
-                    dist[nx][ny]=dist[cx][cy]+1;
-                    q.push({nx,ny});
-                    maze[nx][ny]=w;
+                    int nx=cx+x[i];
+                    int ny=cy+y[i];
+                    
+                    if(nx<0 or nx>=m  or ny<0 or ny>=n)
+                        continue;
+                    if(maze[nx][ny]=='+')
+                        continue;
+                    
+                    else
+                    {
+                        maze[nx][ny]='+';                       
+                        q.push({nx,ny});
+                    }
+
+                    
                 }
             }
-            
+            ans++;
         }
-        return -1;
-        
-        
+        return -1; 
     }
 };
