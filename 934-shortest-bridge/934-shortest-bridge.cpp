@@ -1,90 +1,81 @@
 class Solution {
+    
 public:
-    vector<int> x = {0,0,-1,1};
-    vector<int> y = {1,-1,0,0};
     
-    
-    bool safe(int i,  int j, int n)
+    void dfs(vector<vector<int>> & grid, int r, int c, int n)
     {
-        if(i>=0 and j>=0 and i<n and j<n)
-            return true;
-        return false;
+        if(r<0 or c<0 or r>=n or c>=n or grid[r][c]!=1)
+            return;
+        grid[r][c]=2;
+        
+        dfs(grid,r-1,c,n);
+        dfs(grid,r+1,c,n);
+        dfs(grid,r,c-1,n);
+        dfs(grid,r,c+1,n);
     }
     
-    void paint(vector<vector<int>>& grid, queue<pair<int,int>>& q, int i, int j)
-    {
-        int n = grid.size();
-        if(safe(i,j,n) and grid[i][j]==1)
-        {
-            grid[i][j]=2;
-            q.push({i,j});
-            for(int k=0;k<4;k++)
-            {
-                paint(grid,q,i+x[k],j+y[k]);
-            }
-        }
-    }
-    
+    int x[4]={1,-1,0,0};
+    int y[4]={0,0,-1,1};
     int shortestBridge(vector<vector<int>>& grid) {
+        int n=grid.size();
+        bool flag=false;
+        
+        
+        
+       
+        
         
         queue<pair<int,int>>q;
-        
-        int n = grid.size();
-        
-        
-        
         for(int i=0;i<n;i++)
         {
-            bool flag = false;
             for(int j=0;j<n;j++)
             {
-                if(grid[i][j]==1)
+                if(grid[i][j]==1 and !flag)
                 {
-                    paint(grid,q,i,j);
-                    flag = true;
-                    break;
+                    dfs(grid,i,j,n);
+                    flag=true;
+                }
+                else if(grid[i][j]==1 and flag)
+                {
+                    q.push({i,j});
                 }
             }
-            if(flag)
-                break;
         }
         
-        // cout<<q.size()<<" ";
+       
+        int ans=0;
         
         while(!q.empty())
         {
-            int cx = q.front().first;
-            int cy = q.front().second;
+            int sz=q.size();
             
-            q.pop();
-            
-            for(int i =0;i<4;i++)
+            while(sz--)
             {
-                int nx = cx+x[i];
-                int ny = cy+y[i];
+                  int cx=q.front().first;
+                int cy=q.front().second;
+                q.pop();
                 
-                if(safe(nx,ny,n))
+                for(int i=0;i<4;i++)
                 {
-                    if(grid[nx][ny]==1)
+                    int nx=cx+x[i];
+                    int ny=cy+y[i];
+
+                    if(nx<0 or ny<0 or nx>=n or ny>=n)
+                        continue;
+                    if(grid[nx][ny]==2)
+                        return ans;
+                    else if(grid[nx][ny]==0)
                     {
-                        // cout<<nx<<" "<<ny;
-                        return grid[cx][cy]-2;
-                        
-                    }
-                        
-                    if(grid[nx][ny]==0)
-                    {
-                        // cout<<grid[cx][cy]<<" ";
-                        grid[nx][ny]=grid[cx][cy]+1;
                         q.push({nx,ny});
+                        grid[nx][ny]=1;
                     }
                 }
-                
+                 
             }
+            ans++;
             
         }
-        return 0;
-        
+        return -1;
         
     }
 };
