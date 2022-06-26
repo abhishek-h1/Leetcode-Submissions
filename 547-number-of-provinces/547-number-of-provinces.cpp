@@ -1,24 +1,24 @@
 class Solution {
 public:
-    void dfs(vector<vector<int>>& grid,vector<bool>& check, int src)
+    void dfs(vector<vector<int>>adj, int src,vector<bool>&vis)
     {
-        check[src]=true;
-        for(int i=0;i<grid.size();i++)
+        vis[src]=true;
+        for(int i=0;i<adj[src].size();i++)
         {
-            if(grid[src][i]==1 and !check[i])
-                dfs(grid,check,i);
+            
+            if(adj[src][i]==1 and vis[i]==false)
+                dfs(adj,i,vis);
         }
     }
-    int findCircleNum(vector<vector<int>>& grid) {
-        int ans = 0;
-        vector<bool> check(grid.size(),false);
-        
-        for(int i=0;i<grid.size();i++)
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int ans=0;
+        vector<bool>vis(isConnected.size(),false);
+        for(int i=0;i<isConnected.size();i++)
         {
-            if(!check[i])
+            if(!vis[i])
             {
                 ans++;
-                dfs(grid,check,i);
+                dfs(isConnected,i,vis);
             }
         }
         return ans;
