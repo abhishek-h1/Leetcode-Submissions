@@ -1,27 +1,30 @@
 class Solution {
 public:
-    void dfs(vector<vector<int>>& rooms,int u, set<int>&s)
-    {
-        s.insert(u);
-        if(s.size()==rooms.size())
-            return;
-        for(int v:rooms[u])
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        vector<bool>vis(rooms.size(),false);
+        stack<int>st;
+        st.push(0);
+        vis[0]=true;
+        while(!st.empty())
         {
-            if(s.find(v)==s.end())
+            int t=st.top();
+            st.pop();
+            
+            for(int n:rooms[t])
             {
-                s.insert(v);
-                dfs(rooms,v,s);
+                if(!vis[n])
+                {
+                    vis[n]=true;
+                    st.push(n);
+                }
             }
         }
-    }
-    bool canVisitAllRooms(vector<vector<int>>& rooms) {
-        set<int> s;
-        dfs(rooms,0,s);
-        for(int e:s)
+        
+        for(bool b:vis)
         {
-            cout<<e<<" ";
+            if(!b)
+                return false;
         }
-        cout<<endl;
-        return (s.size()==rooms.size());
+        return true;
     }
 };
