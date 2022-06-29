@@ -1,35 +1,32 @@
 class Solution {
 public:
-    vector<vector<int>>graph;
-    vector<int>vis;
-    int ans=0;
-    int numOfMinutes(int n, int headID, vector<int>& mngr, vector<int>& informTime) {
-        graph.resize(n);
-        vis.resize(n,0);
+    int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTime) {
+        int ans=0;
         
-        int src;
-        for(int i=0;i<mngr.size();i++){
-            if(mngr[i]==-1){
-                src=i;
-                continue;
+        vector<int> v[n];
+        
+        for(int i=0;i<n;i++)
+        {
+            if(manager[i]!=-1)
+            {
+                v[manager[i]].push_back(i);
             }
-            graph[i].push_back(mngr[i]);
-            graph[mngr[i]].push_back(i);
         }
-        dfs(src,0,informTime);
+        
+        stack<pair<int,int>>st;
+        st.push({headID,informTime[headID]});
+        while(!st.empty())
+        {
+            int t=st.top().first;
+            int curr=st.top().second;
+            st.pop();
+            
+            for(int i:v[t])
+            {
+                st.push({i,curr+informTime[i]});
+                ans=max(ans,curr+informTime[i]);
+            }
+        }
         return ans;
-    }
-    void dfs(int src,int tot, vector<int>&infoT){
-        if(vis[src]){
-            return;
-        }
-        vis[src] = 1;
-        tot+=infoT[src];
-            ans = max(ans,tot);
-        for(auto it:graph[src]){
-            if(vis[it]==0){
-                dfs(it,tot,infoT);
-            }
-        }
     }
 };
