@@ -1,31 +1,34 @@
 class Solution {
 public:
-    
-    bool dfs(vector<vector<int>>& graph, vector<int>& check, int src)
+    bool dfs(vector<vector<int>>& graph, int i, map<int,bool>&m)
     {
-        if(check[src]>0)
-            return check[src]==2;
-        check[src]=1;
-        
-        for(auto x:graph[src])
+        if(m.find(i)!=m.end())
         {
-            if(check[x]==2)
-                continue;
-            if(check[x]==1 || !dfs(graph,check,x))
+            return m[i];
+        }
+        
+        m[i]=false;
+        for(int n:graph[i])
+        {
+            if(!dfs(graph,n,m))
                 return false;
         }
-        check[src]=2;
-        return true;
+        
+        m[i]=true;
+        return m[i];
     }
     
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-        vector<int>res;
-        vector<int>check(graph.size(),0);
-        for(int i=0;i<graph.size();i++)
+        int n=graph.size();
+        
+        map<int,bool>m;
+        vector<int>ans;
+        
+        for(int i=0;i<n;i++)
         {
-           if(dfs(graph,check,i))
-               res.push_back(i);
+            if(dfs(graph,i,m))
+                ans.push_back(i);
         }
-        return res;
+        return ans;
     }
 };
