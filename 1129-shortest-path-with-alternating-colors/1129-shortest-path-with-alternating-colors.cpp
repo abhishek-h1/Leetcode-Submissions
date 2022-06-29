@@ -18,11 +18,11 @@ public:
         
         
         ans[0]=0;
-        
+        queue<pair<int,int>>q;
         for(int i=0;i<2;i++)
         {
             set<pair<int,int>>vis;
-            queue<pair<int,int>>q;
+            
         
             q.push({0,i});
             vis.insert({0,i});
